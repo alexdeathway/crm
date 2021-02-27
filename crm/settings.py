@@ -38,15 +38,21 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+#Authentication user model
+
+AUTH_USER_MODEL="leads.User"
+
 # Application definition
 
 INSTALLED_APPS = [
+    'leads.apps.LeadsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
 ]
 
 MIDDLEWARE = [
