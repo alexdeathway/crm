@@ -1,7 +1,12 @@
 from django.urls import path
-from .views import index
-
+from .views import (
+                    index,
+                    leadlist,
+                    CreateLead
+                    )        
 
 urlpatterns=[
-    path("leads/",index)
+    path("",index),
+    path("leadlist/",leadlist),
+    path("create/",CreateLead)
 ]
