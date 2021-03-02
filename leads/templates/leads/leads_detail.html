@@ -2,3 +2,6 @@
 {{lead.last_name}}
 {{lead.age}}
 {{lead.agent}}
+<hr>
+<p><a href={% url 'leadupdate' lead.pk %}>Update </a></p>
+<p><a href={% url 'leaddelete' lead.pk %}>Delete </a></p>

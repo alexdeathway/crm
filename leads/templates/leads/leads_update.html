@@ -1,5 +1,5 @@
 <html>
-<form action="/leads/create/" method="POST">
+<form action={% url 'leadupdate' lead.pk %}  method="POST">
 {% csrf_token %}
 {{form.as_p}}
  <input type="submit" value="Submit">

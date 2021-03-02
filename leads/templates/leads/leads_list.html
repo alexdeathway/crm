@@ -1,5 +1,7 @@
 {% for lead in leads%}
   
-  <p> {{lead.first_name}} </p>
+ <p> <a href={% url 'leaddetail' lead.pk %}> {{lead.first_name}} </a></p>
 
 {% endfor%}
+<hr>
+<p><a href={% url 'leadcreate'  %}>Create</a></p>
