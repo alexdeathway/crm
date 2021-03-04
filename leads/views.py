@@ -7,7 +7,7 @@ from .forms import LeadCreationForm
 
 def index(request):
     print(request)
-    return HttpResponse("Received")
+    return render(request,"leads/index.html")
 
 def LeadList(request):
      leads=LeadModel.objects.all()

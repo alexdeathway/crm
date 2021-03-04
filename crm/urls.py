@@ -20,4 +20,5 @@ from leads.views import index
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('leads/',include("leads.urls")),
+    path("",index,name="index")
 ]
