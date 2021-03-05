@@ -1,13 +1,28 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,reverse
 from django.http import HttpResponse
 from .models import LeadModel
 from .forms import LeadCreationForm
-# Create your views here.
+from django.views.generic import (
+                                    TemplateView,
+                                    CreateView,
+                                    ListView,
+                                    UpdateView,
+                                    DeleteView,
+                                    DetailView,
+                                ) 
+
+class LandingPageView(TemplateView):
+    template_name="leads/index.html"
+
 
 
 def index(request):
-    print(request)
     return render(request,"leads/index.html")
+
+class LeadListView(ListView):
+    template_name="leads/leads_list.html"
+    queryset=LeadModel.objects.all()
+    context_object_name="leads"
 
 def LeadList(request):
      leads=LeadModel.objects.all()
@@ -16,6 +31,13 @@ def LeadList(request):
      }
      return render(request,"leads/leads_list.html",context)
 
+
+class LeadCreateView(CreateView):
+    template_name="leads/leads_create.html"
+    form_class=LeadCreationForm
+
+    def get_success_url(self):
+        return reverse("leadlist")
 
 def LeadCreate(request):
     if request.POST:
@@ -29,6 +51,11 @@ def LeadCreate(request):
     }
     return render(request,"leads/leads_create.html",context)
 
+class LeadDetailView(DetailView):
+    template_name="leads/leads_detail.html"
+    queryset=LeadModel.objects.all()
+    context_object_name="lead"
+
 
 def LeadDetail(request,pk):
     lead=LeadModel.objects.get(id=pk)
@@ -37,6 +64,16 @@ def LeadDetail(request,pk):
     }
     return render(request,"leads/leads_detail.html",context)
 
+
+class LeadUpdateView(UpdateView):
+    template_name="leads/leads_update.html"
+    queryset=LeadModel.objects.all()
+    form_class=LeadCreationForm
+    context_object_name="lead"
+    
+
+    def get_success_url(self):
+        return reverse("leadlist") 
 
 def LeadUpdate(request,pk):
     lead=LeadModel.objects.get(id=pk)
@@ -52,6 +89,15 @@ def LeadUpdate(request,pk):
         "lead":lead,
             }
     return render(request,"leads/leads_update.html",context)
+
+class LeadDeleteView(DeleteView):
+    template_name="leads/leads_delete.html"
+    queryset=LeadModel.objects.all()
+
+
+    def get_success_url(self):
+        return reverse("leadlist")    
+
 
 def LeadDelete(request,pk):
     lead=LeadModel.objects.get(id=pk)
