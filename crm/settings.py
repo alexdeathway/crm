@@ -27,7 +27,7 @@ try:
     from .secret_keys import SECRET_KEY
 except ModuleNotFoundError:
     SETTINGS_DIR=os.path.abspath(os.path.dirname(__file__))
-    generate_secret_key(os.path.join(SETTINGS_DIR,"secret_key.py"))
+    generate_secret_key(os.path.join(SETTINGS_DIR,"secret_keys.py"))
     from .secret_keys import SECRET_KEY     
 
 #SECRET_KEY = ''
@@ -38,15 +38,21 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+#Authentication user model
+
+AUTH_USER_MODEL="leads.User"
+
 # Application definition
 
 INSTALLED_APPS = [
+    'leads.apps.LeadsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
 ]
 
 MIDDLEWARE = [
