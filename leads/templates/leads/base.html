@@ -1,7 +1,13 @@
+{% load static %}
+
 <!doctype html>
 
 <html lang="en">
-<head>{% block head %}
+<head>
+{% block head %}
+
+{% endblock head %}
+
  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
 
   <meta charset="utf-8">
@@ -9,11 +15,15 @@
   <title>{% block title %}
   {% endblock title %}</title>
   
-{% endblock head %}
+  </head>
 
-</head>
 
 <body>
+{% block scripts %}
+
+{% endblock scripts %}
+
+
 <header class="text-gray-600 body-font">
   <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
     <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
@@ -84,5 +94,6 @@
   
   {% endblock footer %}
   </footer>
+
 </body>
 </html>

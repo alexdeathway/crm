@@ -14,6 +14,8 @@ from .views import (
                     LeadDeleteView,
                     )        
 
+app_name="leads"
+
 urlpatterns=[
     path("",LeadListView.as_view(),name="leadlist"),
     path("create/",LeadCreateView.as_view(),name="leadcreate"),
