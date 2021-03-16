@@ -2,7 +2,7 @@ from django.core.mail import send_mail
 from django.shortcuts import render,redirect,reverse
 from django.http import HttpResponse
 from .models import LeadModel
-from .forms import LeadCreationForm
+from .forms import LeadCreationForm,AgentCreationForm
 from django.views.generic import (
                                     TemplateView,
                                     CreateView,
@@ -16,6 +16,12 @@ class LandingPageView(TemplateView):
     template_name="leads/index.html"
 
 
+class SignupView(CreateView):
+    template_name="registration/signup.html"
+    form_class=AgentCreationForm
+
+    def get_success_url(self):
+        return reverse("login")
 
 def index(request):
     return render(request,"leads/index.html")

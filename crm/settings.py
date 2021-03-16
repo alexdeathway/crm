@@ -70,7 +70,7 @@ ROOT_URLCONF = 'crm.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ["templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -142,3 +142,4 @@ STATICFILES_DIRS=[
 STATIC_ROOT="static_root"
 
 EMAIL_BACKEND="django.core.mail.backends.console.EmailBackend"
+LOGIN_REDIRECT_URL="/leads"

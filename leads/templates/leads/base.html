@@ -37,14 +37,30 @@
       <a class="mr-5 hover:text-gray-900">First Link</a>
       <a class="mr-5 hover:text-gray-900">Second Link</a>\
       <a class="mr-5 hover:text-gray-900">Third Link</a>
-     --> 
-      <a class="mr-5 hover:text-gray-900">Sign Up</a>
+     -->
+     <a href ={% url 'leads:leadlist' %} class="mr-5 hover:text-gray-900">leads</a> 
+      {% if not  request.user.is_authenticated %}
+      <a href={% url 'signup' %} class="mr-5 hover:text-gray-900">Sign Up</a>
+      {% endif %}
     </nav>
-    <button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">login
+    {% if request.user.is_authenticated %}
+    Logged in as: {{request.user.username}}
+    <a href= {% url 'logout' %} button class=" ml-3 inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
+    logout
       <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
         <path d="M5 12h14M12 5l7 7-7 7"></path>
       </svg>
     </button>
+    </a>
+    {% else %}
+    <a href= {% url 'login' %} button class="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
+    login
+      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+        <path d="M5 12h14M12 5l7 7-7 7"></path>
+      </svg>
+    </button>
+    </a>
+    {% endif %}
   </div>
 </header>
   {% block body %}
