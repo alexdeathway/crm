@@ -46,6 +46,7 @@ AUTH_USER_MODEL="leads.User"
 
 INSTALLED_APPS = [
     'leads.apps.LeadsConfig',
+    'agents.apps.AgentsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
