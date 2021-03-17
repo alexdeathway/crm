@@ -18,7 +18,7 @@ class LeadCreationForm(forms.ModelForm):
         ]
 
 
-class AgentCreationForm(UserCreationForm):
+class UserCreationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ("username",)

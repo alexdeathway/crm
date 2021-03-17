@@ -5,6 +5,12 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     pass
 
+class UserProfile(models.Model):
+    user=models.OneToOneField(User,on_delete=models.CASCADE)
+ 
+    def __str__(self):
+        return self.user.username
+
 class LeadModel(models.Model):
     first_name=models.CharField(max_length=20)
     last_name=models.CharField(max_length=20)
@@ -17,8 +23,8 @@ class LeadModel(models.Model):
 
 
 class AgentModel(models.Model):
-    name=models.OneToOneField(User,on_delete=models.CASCADE)
-    email=models.EmailField()
+    user=models.OneToOneField(User,on_delete=models.CASCADE)
+    organisation=models.ForeignKey(UserProfile,on_delete=models.CASCADE)
 
     def __str__(self):
         return self.email
