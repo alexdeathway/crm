@@ -1,0 +1,10 @@
+{% extends "leads/base.html" %}
+{% block body %}
+
+<form  method="post">
+<h1> Confirm delete ?</h1>
+{% csrf_token %}
+{{form.as_p}}
+ <input type="submit" value="Submit">
+</form>
+{% endblock body %}

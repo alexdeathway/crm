@@ -29,7 +29,7 @@ class AgentModel(models.Model):
     organisation=models.ForeignKey(UserProfile,on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(self.user)
+        return str(self.user.email)
 
 
 def post_user_created_signal(sender,instance,created,**kwargs):
