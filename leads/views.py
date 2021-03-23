@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import LeadModel
 from .forms import LeadCreationForm,UserCreationForm
+from agents.mixin import OrganisorAndLoginRequiredMixin
 from django.views.generic import (
                                     TemplateView,
                                     CreateView,
@@ -29,8 +30,15 @@ def index(request):
 
 class LeadListView(LoginRequiredMixin,ListView):
     template_name="leads/leads_list.html"
-    queryset=LeadModel.objects.all()
     context_object_name="leads"
+
+    def get_queryset(self):
+        user=self.request.user
+        
+        queryset=LeadModel.objects.all()
+        if self.request.user.is_agent:
+            queryset=queryset.filter(agent__user=self.request.user)
+        return queryset    
 
 def LeadList(request):
      leads=LeadModel.objects.all()
@@ -40,7 +48,7 @@ def LeadList(request):
      return render(request,"leads/leads_list.html",context)
 
 
-class LeadCreateView(LoginRequiredMixin,CreateView):
+class LeadCreateView(OrganisorAndLoginRequiredMixin,CreateView):
     template_name="leads/leads_create.html"
     form_class=LeadCreationForm
 
@@ -83,7 +91,7 @@ def LeadDetail(request,pk):
     return render(request,"leads/leads_detail.html",context)
 
 
-class LeadUpdateView(LoginRequiredMixin,UpdateView):
+class LeadUpdateView(OrganisorAndLoginRequiredMixin,UpdateView):
     template_name="leads/leads_update.html"
     queryset=LeadModel.objects.all()
     form_class=LeadCreationForm
