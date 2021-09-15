@@ -2,7 +2,7 @@ from django.core.mail import send_mail
 from django.shortcuts import render,redirect,reverse
 from django.http import HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import LeadModel
+from .models import AgentModel, LeadModel
 from .forms import LeadCreationForm,UserCreationForm
 from agents.mixin import OrganisorAndLoginRequiredMixin
 from django.views.generic import (
@@ -34,10 +34,14 @@ class LeadListView(LoginRequiredMixin,ListView):
 
     def get_queryset(self):
         user=self.request.user
-        
-        queryset=LeadModel.objects.all()
-        if self.request.user.is_agent:
-            queryset=queryset.filter(agent__user=self.request.user)
+
+        #queryset of leads for the entire organisation
+        if user.is_organisor:
+            queryset=LeadModel.objects.filter(organisation=user.userprofile)
+        else:
+            queryset=LeadModel.objects.filter(organisation =user.agent.organisation)
+            #filter for the agent that is logged in
+            queryset=queryset.filte(agent__user=user)
         return queryset    
 
 def LeadList(request):
@@ -79,8 +83,19 @@ def LeadCreate(request):
 
 class LeadDetailView(LoginRequiredMixin,DetailView):
     template_name="leads/leads_detail.html"
-    queryset=LeadModel.objects.all()
+
     context_object_name="lead"
+    def get_queryset(self):
+        user=self.request.user
+
+        #queryset of leads for the entire organisation
+        if user.is_organisor:
+            queryset=LeadModel.objects.filter(organisation=user.userprofile)
+        else:
+            queryset=LeadModel.objects.filter(organisation =user.agent.organisation)
+            #filter for the agent that is logged in
+            queryset=queryset.filte(agent__user=user)
+        return queryset    
 
 
 def LeadDetail(request,pk):
