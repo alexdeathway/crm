@@ -1,3 +1,4 @@
+import random
 from django.shortcuts import render,reverse
 from django.views.generic import (
                                  ListView,
@@ -10,6 +11,7 @@ from leads.models import AgentModel
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import AgentModelForm
 from .mixin import OrganisorAndLoginRequiredMixin
+from django.core.mail import send_mail
 # Create your views here.
 
 class AgentListView(OrganisorAndLoginRequiredMixin,ListView):
@@ -29,9 +31,22 @@ class AgentCreatView(OrganisorAndLoginRequiredMixin,CreateView):
         return reverse("agents:agents")
 
     def form_valid(self,form):
-        agent=form.save(commit=False)
-        agent.organisation=self.request.user.userprofile
-        agent.save()
+        user=form.save(commit=False)
+        user.is_agent=True
+        user.is_organisor=False
+        user.set_password(f"{random.randint(1,100000)}")
+        user.save()
+        AgentModel.objects.create(
+            user=user,
+            organisation=self.request.user.userprofile
+        )
+
+        send_mail(
+            subject="You assigned as agent",
+            message="You have been assigned as agent.",
+            from_email="admin@test.com",
+            recipient_list=['agenttest2@test.com']
+        )
         return super(AgentCreatView,self).form_valid(form)
 
 

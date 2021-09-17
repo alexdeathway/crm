@@ -7,8 +7,6 @@ from .views import (
                     AgentDeleteView
                     )
 
-
-
 app_name='agents'
 
 urlpatterns=[
