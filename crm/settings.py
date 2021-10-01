@@ -53,7 +53,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'crispy_forms',
+    'crispy_tailwind',
 ]
 
 MIDDLEWARE = [
@@ -145,3 +146,6 @@ STATIC_ROOT="static_root"
 EMAIL_BACKEND="django.core.mail.backends.console.EmailBackend"
 LOGIN_REDIRECT_URL="/leads"
 LOGIN_URL="/login/"
+LOGOUT_REDIRECT_URL="/leads"
+
+CRISPY_TEMPLATE_PACK="tailwind"

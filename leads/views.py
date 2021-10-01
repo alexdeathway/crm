@@ -4,16 +4,15 @@ from django.http import HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from .models import AgentModel, LeadModel,CategoryModel
-from .forms import LeadCreationForm,UserCreationForm,AssignAgentForm
+from .forms import (
+                    LeadCreationForm,UserCreationForm,AssignAgentForm,
+                    CategoryUpdateForm,
+                   ) 
 from agents.mixin import OrganisorAndLoginRequiredMixin
 from django.views.generic import (
-                                    TemplateView,
-                                    CreateView,
-                                    ListView,
-                                    UpdateView,
-                                    DeleteView,
-                                    DetailView,
-                                ) 
+                                    TemplateView,CreateView,ListView,
+                                    UpdateView,DeleteView,DetailView,
+                                 ) 
 
 class LandingPageView(TemplateView):
     template_name="leads/index.html"
@@ -256,3 +255,21 @@ class CategoryDetailView(LoginRequiredMixin,generic.DetailView):
         else:
             queryset=CategoryModel.objects.filter(organisation = user.agent.organisation,)
         return queryset
+
+class CategoryUpdateView(LoginRequiredMixin,generic.UpdateView):
+    template_name="leads/category_update.html"
+    form_class=CategoryUpdateForm
+    context_object_name="lead"
+    
+    def get_queryset(self):
+        user=self.request.user
+
+        #queryset of leads for the entire organisation
+        if user.is_organisor:
+            queryset=LeadModel.objects.filter(organisation=user.userprofile,)
+        else:
+            queryset=LeadModel.objects.filter(organisation = user.agent.organisation,)
+        return queryset
+
+    def get_success_url(self):
+        return reverse("leads:leaddetail",kwargs={"pk":self.get_object().id})    

@@ -1,11 +1,12 @@
 {% extends "leads/base.html" %}
+{% load tailwind_filters %}
 
 {% block body %}
 
 <form method="post">
 
 {% csrf_token %}
-{{ form.as_p}}
+{{ form|crispy }}
 <button>login </button>
 <hr/>
 <a href='{% url 'reset-password' %}'>Forgot password? </a>

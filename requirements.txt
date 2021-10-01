@@ -1,4 +1,6 @@
 asgiref==3.4.1
+crispy-tailwind==0.5.0
 Django==3.2.7
+django-crispy-forms==1.13.0
 pytz==2021.1
 sqlparse==0.4.2

@@ -35,3 +35,9 @@ class AssignAgentForm(forms.Form):
         super(AssignAgentForm,self).__init__(*args,**kwargs)
         self.fields["agents"].queryset=agents
         
+class CategoryUpdateForm(forms.ModelForm):
+      class Meta:
+        model=LeadModel
+        fields=[
+            "category",
+        ]      
