@@ -219,7 +219,7 @@ class CategoryListView(LoginRequiredMixin,generic.ListView):
         else:
             queryset=LeadModel.objects.filter(organisation = user.agent.organisation,)
         context.update({
-          "unassigned_lead_count":queryset.filter(Category__isnull=True).count()
+          "unassigned_lead_count":queryset.filter(category__isnull=True).count()
         })
         return context
     

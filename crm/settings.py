@@ -9,12 +9,21 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-from .secgen import generate_secret_key
 from pathlib import Path
+import environ
 import os
+
+env = environ.Env(
+    DEBUG=(bool, False)
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+ENV_BASE_DIR=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+READ_ENV_FILE=env.bool('READ_ENV_FILE',default=False)
+if READ_ENV_FILE:
+    environ.Env.read_env() #os.path.join(ENV_BASE_DIR, '.env'))
 
 
 # Quick-start development settings - unsuitable for production
@@ -22,18 +31,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-#use this in Development  
-try:
-    from .secret_keys import SECRET_KEY
-except ModuleNotFoundError:
-    SETTINGS_DIR=os.path.abspath(os.path.dirname(__file__))
-    generate_secret_key(os.path.join(SETTINGS_DIR,"secret_keys.py"))
-    from .secret_keys import SECRET_KEY     
+DEBUG=env('DEBUG')
+SECRET_KEY=env('SECRET_KEY')   
+print(DEBUG,SECRET_KEY)          
 
 #SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -92,10 +96,14 @@ WSGI_APPLICATION = 'crm.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+   'default': {
+       'ENGINE': 'django.db.backends.postgresql',
+       'NAME': env('DATABASE_NAME'),
+       'USER': env('DATABASE_USER'),
+       'PASSWORD': env('USER_PASSWORD'),
+       'HOST': env('HOSTNAME'),
+       'PORT': env('PORT'),
+   }
 }
 
 
