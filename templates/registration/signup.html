@@ -1,0 +1,14 @@
+{% extends "leads/base.html" %}
+{% load tailwind_filters %}
+
+{% block body %}
+
+<form method="post">
+
+{% csrf_token %}
+{{ form|crispy }}
+<button>Signup </button>
+
+</form>
+
+{% endblock body %}

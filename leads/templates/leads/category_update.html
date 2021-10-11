@@ -17,7 +17,7 @@
                     Reviews
                 </a>
                 <a href="{% url 'leads:leadupdate' lead.pk %}" class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg px-1">
-                    Update Details
+                    Category Update
                 </a>
             </div>
             <form form method="post">
@@ -36,21 +36,3 @@
   
 
 {% endblock body %}
-
-
-{{lead.first_name}}
-{{lead.last_name}}
-{{lead.age}}
-{{lead.agent}}
-<hr>
-<p><a href={% url 'leads:leadupdate' lead.pk %}>Update </a></p>
-<p><a href={% url 'leads:leaddelete' lead.pk %}>Delete </a></p>
-
-
-
-<form action={% url 'leadupdate' lead.pk %}  method="POST">
-{% csrf_token %}
-{{form.as_p}}
- <input type="submit" value="Submit">
-</form>
-</html>

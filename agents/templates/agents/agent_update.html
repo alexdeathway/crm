@@ -10,13 +10,13 @@
             <h2 class="text-sm title-font text-gray-500 tracking-widest">LEAD</h2>
             <h1 class="text-gray-900 text-3xl title-font font-medium mb-4">{{ lead.first_name }} {{ lead.last_name }}</h1>
             <div class="flex mb-4">
-                <a href="{% url 'leads:leaddetail' lead.pk %}" class="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1">
+                <a href="{% url 'agents:agentdetail' agent.pk %}" class="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1">
                     Overview
                 </a>
                 <a class="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1">
                     Reviews
                 </a>
-                <a href="{% url 'leads:leadupdate' lead.pk %}" class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg px-1">
+                <a href="{% url 'agents:agentupdate' agent.pk %}" class="flex-grow text-indigo-500 border-b-2 border-indigo-500 py-2 text-lg px-1">
                     Update Details
                 </a>
             </div>
@@ -25,7 +25,7 @@
                 {{ form.as_p }}
                 <button type="submit">Submit</button>
             </form>
-            <a href="{% url 'leads:leaddelete' lead.pk %}" class="w-1/2 mt-3 flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
+            <a href="{% url 'agents:agentdelete' agent.pk %}" class="w-1/2 mt-3 flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
                 Delete
             </a>
         </div>
@@ -37,20 +37,3 @@
 
 {% endblock body %}
 
-
-{{lead.first_name}}
-{{lead.last_name}}
-{{lead.age}}
-{{lead.agent}}
-<hr>
-<p><a href={% url 'leads:leadupdate' lead.pk %}>Update </a></p>
-<p><a href={% url 'leads:leaddelete' lead.pk %}>Delete </a></p>
-
-
-
-<form action={% url 'leadupdate' lead.pk %}  method="POST">
-{% csrf_token %}
-{{form.as_p}}
- <input type="submit" value="Submit">
-</form>
-</html>

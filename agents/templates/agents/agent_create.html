@@ -1,5 +1,5 @@
 <html>
-<form action={% url 'leads:leadcreate'  %} method="POST">
+<form action={% url 'agents:agentcreate'  %} method="POST">
 {% csrf_token %}
 {{form.as_p}}
  <input type="submit" value="Submit">
